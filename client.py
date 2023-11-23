@@ -5,7 +5,7 @@ import boto3
 import time
 from pathlib import Path
 import sys; sys.path.append(os.path.dirname(os.path.realpath(__file__)))
-from utils import shell
+from .utils import shell
 
 regions = ['ams3', 'fra1', 'nyc3', 'sgp1', 'sfo2', 'sfo3']
 
