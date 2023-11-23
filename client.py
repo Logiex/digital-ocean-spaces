@@ -264,7 +264,7 @@ class Client:
             return True
         finally:
             pass
-        
+    
     def upload_file(self, file, destination="", rename=None, space_name=None, extra_args={}):
         """
         Uploads a single file.
@@ -297,6 +297,37 @@ class Client:
         try:
             tic = time.perf_counter()
             self.session.upload_file(file, self.space, destination, ExtraArgs=extra_args)
+            toc = time.perf_counter()
+            print(
+                f'Uploaded to {self.region}/{self.space} in {toc - tic:0.4f} seconds \n- Destination -> {destination}')
+            self.refresh_files()
+            return True
+        finally:
+            pass
+    
+    def upload_file_obj(self, file_obj, filename, destination = "", rename=None, space_name=None, extra_args={}):
+        """
+        Uploads a single file.
+        """
+        self.set_space(space_name)
+
+        # Check for rename and make sure it's safe
+        if rename:
+            if Path(rename).suffixes:
+                raise Exception('[Raised]' + cant_replace_file_ext)
+            elif os.path.dirname(rename):
+                raise Exception('[Raised]' + cant_place_path_in_file_name)
+            else:
+                name = rename
+
+        # Make sure destination is marked as a directory
+        if destination[-1] != '/':
+            destination += '/'
+        destination += name + filename
+
+        try:
+            tic = time.perf_counter()
+            self.session.upload_fileobj(file_obj, self.space, destination, ExtraArgs=extra_args)
             toc = time.perf_counter()
             print(
                 f'Uploaded to {self.region}/{self.space} in {toc - tic:0.4f} seconds \n- Destination -> {destination}')
