@@ -305,7 +305,7 @@ class Client:
         finally:
             pass
     
-    def upload_file_obj(self, file_obj, filename, destination = "", rename=None, space_name=None, extra_args={}):
+    def upload_file_obj(self, file_obj, filename, folder = "", rename=None, space_name=None, extra_args={}):
         """
         Uploads a single file.
         """
@@ -318,12 +318,11 @@ class Client:
             elif os.path.dirname(rename):
                 raise Exception('[Raised]' + cant_place_path_in_file_name)
             else:
-                name = rename
+                filename = rename
 
         # Make sure destination is marked as a directory
-        if destination[-1] != '/':
-            destination += '/'
-        destination += name + filename
+        
+        destination += filename
 
         try:
             tic = time.perf_counter()
