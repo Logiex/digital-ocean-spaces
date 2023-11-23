@@ -322,14 +322,14 @@ class Client:
 
         # Make sure destination is marked as a directory
         
-        destination += filename
+        folder += filename
 
         try:
             tic = time.perf_counter()
-            self.session.upload_fileobj(file_obj, self.space, destination, ExtraArgs=extra_args)
+            self.session.upload_fileobj(file_obj, self.space, folder, ExtraArgs=extra_args)
             toc = time.perf_counter()
             print(
-                f'Uploaded to {self.region}/{self.space} in {toc - tic:0.4f} seconds \n- Destination -> {destination}')
+                f'Uploaded to {self.region}/{self.space} in {toc - tic:0.4f} seconds \n- Destination -> {folder}')
             self.refresh_files()
             return True
         finally:
